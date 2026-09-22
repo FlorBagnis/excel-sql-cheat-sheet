@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>✨ Tech Cheat Sheet • Excel & SQL Kawaii 🌸</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Quicksand:wght@500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Quicksand', 'Nunito', sans-serif;
+      background-color: #fff5f7;
+      background-image: 
+        radial-gradient(#ffd1dc 1px, transparent 1px),
+        radial-gradient(#ffd1dc 1px, #fff5f7 1px);
+      background-size: 24px 24px;
+      background-position: 0 0, 12px 12px;
+    }
+    .kbd-chip {
+      font-family: 'JetBrains Mono', monospace;
+      box-shadow: 0 3px 0 #f49ab4;
+      transition: all 0.15s ease;
+    }
+    .kbd-chip:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 0 #f49ab4;
+    }
+    .sql-code {
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .kawaii-card {
+      border: 3px solid #ffccd8;
+      box-shadow: 0 8px 20px -6px rgba(255, 143, 171, 0.25);
+    }
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #ffe6ed;
+      border-radius: 999px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #ff9ebb;
+      border-radius: 999px;
+    }
+  </style>
+</head>
+<body class="min-h-screen text-pink-900 pb-16">
+
+  <!-- Header -->
+  <header class="max-w-6xl mx-auto pt-8 px-4 text-center">
+    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border-2 border-pink-200 shadow-sm text-xs font-bold text-pink-500 mb-3 tracking-wide uppercase">
+      <span>☁️</span> Tech Cheat Sheet <span>✨</span>
+    </div>
+    
+    <h1 class="text-3xl sm:text-5xl font-black tracking-tight text-pink-600 mb-2 flex items-center justify-center gap-3">
+      <span class="text-2xl sm:text-4xl">🌸</span>
+      <span id="headerTitle">Excel & SQL Cheat Sheet</span>
+      <span class="text-2xl sm:text-4xl">💻</span>
+    </h1>
+    <p class="text-pink-400 font-semibold text-sm sm:text-base max-w-xl mx-auto">
+      Tu navaja suiza kawaii & tech para dominar hojas de cálculo y bases de datos al instante.
+    </p>
+
+    <!-- Main Tabs: EXCEL vs SQL -->
+    <div class="mt-6 flex justify-center gap-3">
+      <button id="tabExcelBtn" onclick="switchMainTab('EXCEL')" class="px-6 py-2.5 rounded-2xl text-sm font-black tracking-wide transition flex items-center gap-2 bg-pink-500 text-white shadow-md shadow-pink-200">
+        <span>📊</span> 100 Atajos de Excel
+      </button>
+      <button id="tabSqlBtn" onclick="switchMainTab('SQL')" class="px-6 py-2.5 rounded-2xl text-sm font-black tracking-wide transition flex items-center gap-2 bg-white text-pink-600 border-2 border-pink-200 hover:bg-pink-50">
+        <span>🗄️</span> Guía & Comandos SQL
+      </button>
+    </div>
+
+    <!-- Search & Secondary Filter Bar -->
+    <div class="mt-6 max-w-3xl mx-auto flex flex-col sm:flex-row gap-3 items-center justify-center">
+      <div class="relative w-full">
+        <span class="absolute left-4 top-3 text-pink-400 font-bold">🔍</span>
+        <input 
+          id="searchInput"
+          type="text" 
+          placeholder="Buscar atajo o comando (ej. 'copiar', 'SELECT', 'WHERE')..." 
+          class="w-full pl-11 pr-4 py-2.5 rounded-2xl bg-white border-2 border-pink-200 focus:border-pink-400 focus:outline-none text-pink-800 placeholder-pink-300 font-semibold shadow-sm transition"
+        />
+      </div>
+
+      <!-- Controls for EXCEL -->
+      <div id="excelControls" class="flex gap-2 w-full sm:w-auto overflow-x-auto pb-1 items-center">
+        <!-- Language Selector -->
+        <div class="inline-flex bg-pink-100 p-1 rounded-xl border border-pink-200 flex-shrink-0">
+          <button id="langES" onclick="setLanguage('ES')" class="px-2.5 py-1 rounded-lg text-xs font-black transition bg-pink-500 text-white shadow-sm">
+            🇪🇸 ES
+          </button>
+          <button id="langEN" onclick="setLanguage('EN')" class="px-2.5 py-1 rounded-lg text-xs font-black transition text-pink-600 hover:text-pink-800">
+            🇺🇸 EN
+          </button>
+        </div>
+
+        <button onclick="filterExcelCategory('ALL', event)" class="excel-cat-btn active px-3 py-1.5 rounded-xl text-xs font-black tracking-wider uppercase transition bg-pink-500 text-white shadow-sm flex-shrink-0">
+          Todos
+        </button>
+        <button onclick="filterExcelCategory('BÁSICOS', event)" class="excel-cat-btn px-3 py-1.5 rounded-xl text-xs font-black tracking-wider uppercase transition bg-white text-pink-600 border border-pink-200 hover:bg-pink-50 flex-shrink-0">
+          Básicos
+        </button>
+        <button onclick="filterExcelCategory('INTERMEDIO', event)" class="excel-cat-btn px-3 py-1.5 rounded-xl text-xs font-black tracking-wider uppercase transition bg-white text-pink-600 border border-pink-200 hover:bg-pink-50 flex-shrink-0">
+          Intermedio
+        </button>
+        <button onclick="filterExcelCategory('AVANZADO', event)" class="excel-cat-btn px-3 py-1.5 rounded-xl text-xs font-black tracking-wider uppercase transition bg-white text-pink-600 border border-pink-200 hover:bg-pink-50 flex-shrink-0">
+          Avanzado
+        </button>
+        <button onclick="filterExcelCategory('INFRAVALORADOS', event)" class="excel-cat-btn px-3 py-1.5 rounded-xl text-xs font-black tracking-wider uppercase transition bg-white text-pink-600 border border-pink-200 hover:bg-pink-50 flex-shrink-0">
+          Top
+        </button>
+      </div>
+
+      <!-- Controls for SQL -->
+      <div id="sqlControls" class="hidden flex gap-2 w-full sm:w-auto overflow-x-auto pb-1 items-center">
+        <button onclick="filterSqlCategory('ALL', event)" class="sql-cat-btn active px-3 py-1.5 rounded-xl text-xs font-black tracking-wider uppercase transition bg-pink-500 text-white shadow-sm flex-shrink-0">
+          Todos
+        </button>
+        <button onclick="filterSqlCategory('CONSULTAS', event)" class="sql-cat-btn px-3 py-1.5 rounded-xl text-xs font-black tracking-wider uppercase transition bg-white text-pink-600 border border-pink-200 hover:bg-pink-50 flex-shrink-0">
+          Consultas
+        </button>
+        <button onclick="filterSqlCategory('FILTROS', event)" class="sql-cat-btn px-3 py-1.5 rounded-xl text-xs font-black tracking-wider uppercase transition bg-white text-pink-600 border border-pink-200 hover:bg-pink-50 flex-shrink-0">
+          Filtros
+        </button>
+        <button onclick="filterSqlCategory('AGREGACIÓN', event)" class="sql-cat-btn px-3 py-1.5 rounded-xl text-xs font-black tracking-wider uppercase transition bg-white text-pink-600 border border-pink-200 hover:bg-pink-50 flex-shrink-0">
+          Cálculos
+        </button>
+        <button onclick="filterSqlCategory('JOINS', event)" class="sql-cat-btn px-3 py-1.5 rounded-xl text-xs font-black tracking-wider uppercase transition bg-white text-pink-600 border border-pink-200 hover:bg-pink-50 flex-shrink-0">
+          Joins
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="max-w-6xl mx-auto mt-8 px-4">
+
+    <!-- EXCEL VIEW -->
+    <section id="excelSection">
+      <div id="cardsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+    </section>
+
+    <!-- SQL VIEW -->
+    <section id="sqlSection" class="hidden space-y-6">
+      <!-- Lógica mental Kawaii Card (Inspirada en tu imagen inicial) -->
+      <div class="bg-white rounded-3xl kawaii-card p-6 relative overflow-hidden border-2 border-pink-200">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+          <div class="space-y-2 text-left">
+            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-pink-100 text-pink-600 text-xs font-bold">
+              <span>🧠</span> ¿Cómo piensa SQL?
+            </div>
+            <h3 class="text-xl font-black text-pink-600">El orden lógico de ejecución</h3>
+            <p class="text-sm text-pink-800">
+              Aunque vos escribís <code class="bg-pink-50 text-pink-600 px-1.5 py-0.5 rounded font-mono font-bold">SELECT</code> primero, el motor de base de datos procesa en este orden mental:
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 text-xs font-bold">
+              <div class="bg-pink-50 p-3 rounded-2xl border border-pink-200">
+                <span class="text-pink-500 font-black">1. FROM</span>
+                <p class="text-pink-700 font-normal mt-0.5">¿En qué tabla o carpeta está la data?</p>
+              </div>
+              <div class="bg-pink-50 p-3 rounded-2xl border border-pink-200">
+                <span class="text-pink-500 font-black">2. WHERE</span>
+                <p class="text-pink-700 font-normal mt-0.5">Descarta lo que no cumple la condición.</p>
+              </div>
+              <div class="bg-pink-50 p-3 rounded-2xl border border-pink-200">
+                <span class="text-pink-500 font-black">3. SELECT</span>
+                <p class="text-pink-700 font-normal mt-0.5">Muestra únicamente las columnas pedidas.</p>
+              </div>
+            </div>
+          </div>
+          <div class="flex-shrink-0 text-center bg-pink-50 border-2 border-pink-200 rounded-3xl p-4 w-44">
+            <div class="text-4xl mb-1">🗄️🌸</div>
+            <span class="text-xs font-black text-pink-500 block uppercase">Base de datos</span>
+            <span class="text-[10px] text-pink-400 font-bold block">Tablas = Filas + Columnas</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- SQL Cards Grid -->
+      <div id="sqlGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+    </section>
+
+    <!-- No Results Message -->
+    <div id="noResults" class="hidden text-center py-16">
+      <div class="text-5xl mb-3">🥺</div>
+      <h3 class="text-xl font-bold text-pink-600">No encontramos ningún resultado</h3>
+      <p class="text-pink-400 text-sm mt-1">Probá con otra palabra clave o limpiá el buscador</p>
+    </div>
+  </main>
+
+  <footer class="text-center mt-12 text-pink-400 text-xs font-bold tracking-wider">
+    🌸 TECH CHEAT SHEET • EXCEL & SQL EDITION 🌸
+  </footer>
+
+  <script>
+    let activeTab = "EXCEL"; // "EXCEL" o "SQL"
+    let currentExcelLang = "ES";
+    let currentExcelCat = "ALL";
+    let currentSqlCat = "ALL";
+    let searchQuery = "";
+
+    // DATA: 100 ATAJOS EXCEL
+    const SHORTCUTS = [
+      { id: 1, cat: "BÁSICOS", action: "¿Cómo copiar texto?", es: "Ctrl + C", en: "Ctrl + C" },
+      { id: 2, cat: "BÁSICOS", action: "¿Cómo cortar texto?", es: "Ctrl + X", en: "Ctrl + X" },
+      { id: 3, cat: "BÁSICOS", action: "¿Cómo deshacer?", es: "Ctrl + Z", en: "Ctrl + Z" },
+      { id: 4, cat: "BÁSICOS", action: "¿Cómo rehacer?", es: "Ctrl + Y", en: "Ctrl + Y" },
+      { id: 5, cat: "BÁSICOS", action: "¿Cómo guardar el trabajo?", es: "Ctrl + G", en: "Ctrl + S" },
+      { id: 6, cat: "BÁSICOS", action: "¿Cómo abrir un archivo?", es: "Ctrl + A", en: "Ctrl + O" },
+      { id: 7, cat: "BÁSICOS", action: "¿Cómo crear un nuevo libro?", es: "Ctrl + U", en: "Ctrl + N" },
+      { id: 8, cat: "BÁSICOS", action: "¿Cómo imprimir?", es: "Ctrl + P", en: "Ctrl + P" },
+      { id: 9, cat: "BÁSICOS", action: "¿Cómo poner en negrita el texto?", es: "Ctrl + N", en: "Ctrl + B" },
+      { id: 10, cat: "BÁSICOS", action: "¿Cómo poner en cursiva el texto?", es: "Ctrl + K", en: "Ctrl + I" },
+      { id: 11, cat: "BÁSICOS", action: "¿Cómo subrayar texto?", es: "Ctrl + S", en: "Ctrl + U" },
+      { id: 12, cat: "BÁSICOS", action: "¿Cómo buscar una palabra?", es: "Ctrl + B", en: "Ctrl + F" },
+      { id: 13, cat: "BÁSICOS", action: "¿Cómo reemplazar texto?", es: "Ctrl + L", en: "Ctrl + H" },
+      { id: 15, cat: "BÁSICOS", action: "¿Cómo navegar al borde de datos?", es: "Ctrl + Flechas", en: "Ctrl + Arrow Keys" },
+      { id: 16, cat: "BÁSICOS", action: "¿Cómo ingresar la fecha actual?", es: "Ctrl + ;", en: "Ctrl + :" },
+      { id: 17, cat: "BÁSICOS", action: "¿Cómo formatear celdas como moneda?", es: "Ctrl + Shift + $", en: "Ctrl + Shift + $" },
+      { id: 18, cat: "BÁSICOS", action: "¿Cómo formatear celdas como fecha?", es: "Ctrl + Shift + #", en: "Ctrl + Shift + #" },
+      { id: 19, cat: "BÁSICOS", action: "¿Cómo formatear celdas como porcentaje?", es: "Ctrl + Shift + %", en: "Ctrl + Shift + %" },
+      { id: 20, cat: "BÁSICOS", action: "¿Cómo aplicar formato general en línea?", es: "Ctrl + Shift + &", en: "Ctrl + Shift + &" },
+      { id: 21, cat: "BÁSICOS", action: "¿Cómo aplicar formato general?", es: "Ctrl + Shift + ~", en: "Ctrl + Shift + ~" },
+      { id: 22, cat: "BÁSICOS", action: "¿Cómo aplicar formato estilo coma?", es: "Ctrl + Shift + !", en: "Ctrl + Shift + !" },
+      { id: 23, cat: "BÁSICOS", action: "¿Cómo editar contenido de la celda?", es: "F2", en: "F2" },
+      { id: 24, cat: "BÁSICOS", action: "¿Cómo ocultar filas?", es: "Ctrl + 9", en: "Ctrl + 9" },
+      { id: 25, cat: "BÁSICOS", action: "¿Cómo ocultar columnas?", es: "Ctrl + 0", en: "Ctrl + 0" },
+      { id: 26, cat: "INTERMEDIO", action: "¿Cómo usar autosuma?", es: "Alt + =", en: "Alt + =" },
+      { id: 27, cat: "INTERMEDIO", action: "¿Cómo rellenar hacia abajo?", es: "Ctrl + J", en: "Ctrl + D" },
+      { id: 29, cat: "INTERMEDIO", action: "¿Cómo usar Relleno rápido?", es: "Ctrl + E", en: "Ctrl + E" },
+      { id: 30, cat: "INTERMEDIO", action: "¿Cómo insertar un hipervínculo?", es: "Ctrl + Alt + K", en: "Ctrl + K" },
+      { id: 31, cat: "INTERMEDIO", action: "¿Cómo dar formato como tabla?", es: "Ctrl + Q / Ctrl + T", en: "Ctrl + T" },
+      { id: 32, cat: "INTERMEDIO", action: "¿Cómo filtrar datos?", es: "Ctrl + Shift + L", en: "Ctrl + Shift + L" },
+      { id: 33, cat: "INTERMEDIO", action: "¿Cómo asignar nombre a un rango?", es: "Ctrl + Shift + F3", en: "Ctrl + Shift + F3" },
+      { id: 34, cat: "INTERMEDIO", action: "¿Cómo borrar contenido de celda?", es: "Supr / Alt + H + E + A", en: "Alt + H + E + A" },
+      { id: 35, cat: "INTERMEDIO", action: "¿Cómo aplicar formato condicional?", es: "Alt + O + D", en: "Alt + H + L + N" },
+      { id: 36, cat: "INTERMEDIO", action: "¿Cómo inmovilizar fila superior / columna?", es: "Alt + V + F", en: "Alt + W + F + F" },
+      { id: 37, cat: "INTERMEDIO", action: "¿Cómo inmovilizar paneles?", es: "Alt + V + F", en: "Alt + W + F + F / F" },
+      { id: 38, cat: "INTERMEDIO", action: "¿Cómo inmovilizar la primera columna?", es: "Alt + V + C", en: "Alt + W + F + C" },
+      { id: 39, cat: "INTERMEDIO", action: "¿Cómo convertir texto en columnas?", es: "Alt + D + C", en: "Alt + A + E" },
+      { id: 40, cat: "INTERMEDIO", action: "¿Cómo quitar duplicados?", es: "Alt + D + M", en: "Alt + A + M" },
+      { id: 41, cat: "INTERMEDIO", action: "¿Cómo combinar y centrar?", es: "Alt + O + M + C", en: "Alt + H + M + C" },
+      { id: 42, cat: "INTERMEDIO", action: "¿Cómo eliminar hoja de cálculo?", es: "Alt + E + L", en: "Alt + E + L" },
+      { id: 43, cat: "INTERMEDIO", action: "¿Cómo cambiar nombre de hoja actual?", es: "Alt + O + H + C", en: "Alt + H, O, R" },
+      { id: 44, cat: "INTERMEDIO", action: "¿Cómo ordenar de forma ascendente?", es: "Alt + D + S + A", en: "Alt + H + S + A" },
+      { id: 45, cat: "INTERMEDIO", action: "¿Cómo ordenar de forma descendente?", es: "Alt + D + S + Q", en: "Alt + H + S + Q" },
+      { id: 46, cat: "INTERMEDIO", action: "¿Cómo quitar líneas de cuadrícula?", es: "Alt + V + L", en: "Alt + W + VG" },
+      { id: 47, cat: "INTERMEDIO", action: "¿Cómo ir a una celda específica?", es: "F5 / Ctrl + I", en: "F5" },
+      { id: 48, cat: "INTERMEDIO", action: "¿Cómo fijar celda / referencia absoluta ($)?", es: "F4", en: "F4" },
+      { id: 49, cat: "INTERMEDIO", action: "¿Cómo insertar nuevas celdas/filas?", es: "Ctrl + Shift + +", en: "Ctrl + Shift + +" },
+      { id: 50, cat: "INTERMEDIO", action: "¿Cómo eliminar una celda/fila?", es: "Ctrl + -", en: "Ctrl + -" },
+      { id: 51, cat: "AVANZADO", action: "¿Cómo mostrar / ocultar la cinta?", es: "Ctrl + F1", en: "Ctrl + F1" },
+      { id: 52, cat: "AVANZADO", action: "¿Cómo crear vista personalizada?", es: "Alt + V + C", en: "Alt + W + C" },
+      { id: 53, cat: "AVANZADO", action: "¿Cómo pegar especial (solo valores)?", es: "Ctrl + Alt + V + V", en: "Ctrl + Alt + V + V" },
+      { id: 54, cat: "AVANZADO", action: "¿Cómo abrir formato de celdas?", es: "Ctrl + 1", en: "Ctrl + Shift + F" },
+      { id: 55, cat: "AVANZADO", action: "¿Cómo usar buscar objetivo?", es: "Alt + D + W + G", en: "Alt + A + W + G" },
+      { id: 56, cat: "AVANZADO", action: "¿Cómo realizar análisis de escenarios?", es: "Alt + D + W + S", en: "Alt + A + W + S" },
+      { id: 57, cat: "AVANZADO", action: "¿Cómo mostrar el Solver?", es: "Alt + D + Y + 4", en: "Alt + A + Y + 4" },
+      { id: 58, cat: "AVANZADO", action: "¿Cómo alternar entre libros abiertos?", es: "Ctrl + Tab", en: "Windows + Tab" },
+      { id: 59, cat: "AVANZADO", action: "¿Cómo rastrear precedentes / dependientes?", es: "Ctrl + [", en: "Ctrl + [" },
+      { id: 60, cat: "AVANZADO", action: "¿Cómo crear validación de datos?", es: "Alt + D + V + V", en: "Alt + A + V + V" },
+      { id: 61, cat: "AVANZADO", action: "¿Cómo realizar filtrado avanzado?", es: "Alt + D + Q", en: "Alt + A + Q" },
+      { id: 62, cat: "AVANZADO", action: "¿Cómo agrupar filas o columnas?", es: "Alt + Shift + Flecha Der", en: "Alt + A + G + G" },
+      { id: 63, cat: "AVANZADO", action: "¿Cómo insertar Tabla Dinámica (Pivot)?", es: "Alt + B + V", en: "Alt + N, V" },
+      { id: 64, cat: "AVANZADO", action: "¿Cómo seleccionar celdas con comentarios?", es: "Ctrl + Shift + O", en: "Ctrl + Shift + O" },
+      { id: 65, cat: "AVANZADO", action: "¿Cómo ir a un rango con nombre?", es: "F5 / Ctrl + I", en: "Ctrl + G" },
+      { id: 66, cat: "AVANZADO", action: "¿Cómo evaluar fórmula por pasos?", es: "Alt + U + V", en: "Alt + T, U, F" },
+      { id: 67, cat: "AVANZADO", action: "¿Cómo seleccionar solo celdas visibles?", es: "Alt + ;", en: "Alt + ;" },
+      { id: 68, cat: "AVANZADO", action: "¿Cómo crear fórmula de matriz?", es: "Ctrl + Shift + Enter", en: "Ctrl + Shift + Enter" },
+      { id: 69, cat: "AVANZADO", action: "¿Cómo mover a la siguiente hoja?", es: "Ctrl + AvPág", en: "Ctrl + Page Down" },
+      { id: 70, cat: "AVANZADO", action: "¿Cómo mover a la hoja anterior?", es: "Ctrl + RePág", en: "Ctrl + Page Up" },
+      { id: 71, cat: "AVANZADO", action: "¿Cómo quitar bordes?", es: "Ctrl + Shift + _", en: "Ctrl + Shift + _" },
+      { id: 72, cat: "AVANZADO", action: "¿Cómo mostrar u ocultar fórmulas?", es: "Ctrl + ` / Ctrl + ^", en: "Ctrl + ` (backtick)" },
+      { id: 76, cat: "INFRAVALORADOS", action: "¿Cómo mover a ventana siguiente?", es: "Ctrl + F6", en: "Ctrl + F6" },
+      { id: 77, cat: "INFRAVALORADOS", action: "¿Cómo mover a ventana anterior?", es: "Ctrl + Shift + F6", en: "Ctrl + Shift + F6" },
+      { id: 78, cat: "INFRAVALORADOS", action: "¿Cómo insertar fecha y hora actuales?", es: "Ctrl + Shift + ;", en: "Ctrl + Shift + :" },
+      { id: 79, cat: "INFRAVALORADOS", action: "¿Cómo pegar valores y formatos?", es: "Ctrl + Alt + V + T", en: "Ctrl + Alt + V + T" },
+      { id: 80, cat: "INFRAVALORADOS", action: "¿Cómo ajustar texto a celda?", es: "Alt + O + W", en: "Alt + H + W" },
+      { id: 81, cat: "INFRAVALORADOS", action: "¿Cómo borrar todos los formatos?", es: "Alt + O + E + F", en: "Alt + H + E + F" },
+      { id: 82, cat: "INFRAVALORADOS", action: "¿Cómo insertar un salto de línea en celda?", es: "Alt + Enter", en: "Alt + Enter" },
+      { id: 83, cat: "INFRAVALORADOS", action: "¿Cómo insertar un comentario?", es: "Shift + F2", en: "Shift + F2" },
+      { id: 84, cat: "INFRAVALORADOS", action: "¿Cómo abrir menú de celda?", es: "Shift + F10", en: "Shift + F10" },
+      { id: 85, cat: "INFRAVALORADOS", action: "¿Cómo transponer filas a columnas?", es: "Ctrl + Alt + V + E", en: "Ctrl + Alt + V + E" },
+      { id: 86, cat: "INFRAVALORADOS", action: "¿Cómo ver/ejecutar lista de macros?", es: "Alt + F8", en: "Alt + F8" },
+      { id: 87, cat: "INFRAVALORADOS", action: "¿Cómo abrir el editor VBA completo?", es: "Alt + F11", en: "Alt + F11" },
+      { id: 88, cat: "INFRAVALORADOS", action: "¿Cómo autoajustar alto de fila?", es: "Alt + O + C + A", en: "Alt + H + O + A" },
+      { id: 89, cat: "INFRAVALORADOS", action: "¿Cómo ocultar hoja actual?", es: "Alt + O + H + O", en: "Alt + H + O + U + S" },
+      { id: 90, cat: "INFRAVALORADOS", action: "¿Cómo mostrar hoja oculta?", es: "Alt + O + H + M", en: "Alt + H + O + U + H" },
+      { id: 91, cat: "INFRAVALORADOS", action: "¿Cómo expandir la barra de fórmulas?", es: "Ctrl + Shift + U", en: "Ctrl + Shift + U" },
+      { id: 92, cat: "INFRAVALORADOS", action: "¿Cómo insertar una nueva hoja?", es: "Shift + F11", en: "Shift + F11" },
+      { id: 93, cat: "INFRAVALORADOS", action: "¿Cómo seleccionar toda la fila?", es: "Shift + Espacio", en: "Shift + Space" },
+      { id: 94, cat: "INFRAVALORADOS", action: "¿Cómo seleccionar toda la columna?", es: "Ctrl + Espacio", en: "Ctrl + Space" }
+    ];
+
+    // DATA: GUÍA PRÁCTICA SQL
+    const SQL_COMMANDS = [
+      {
+        id: "sql-1",
+        cat: "CONSULTAS",
+        name: "SELECT",
+        badge: "Columnas",
+        meaning: "Indica qué columnas específicas querés traer en el resultado.",
+        example: "SELECT nombre, email FROM usuarios;",
+        tip: "Usá SELECT * para traer todas las columnas."
+      },
+      {
+        id: "sql-2",
+        cat: "CONSULTAS",
+        name: "FROM",
+        badge: "Tabla Origen",
+        meaning: "La tabla de donde proviene la información.",
+        example: "SELECT * FROM transacciones;",
+        tip: "Siempre va después del SELECT."
+      },
+      {
+        id: "sql-3",
+        cat: "FILTROS",
+        name: "WHERE",
+        badge: "Filtro",
+        meaning: "Filtra filas que cumplan una condición específica.",
+        example: "SELECT * FROM ventas WHERE monto > 1000;",
+        tip: "Sólo devuelve las filas donde la condición sea VERDADERA."
+      },
+      {
+        id: "sql-4",
+        cat: "CONSULTAS",
+        name: "DISTINCT",
+        badge: "Sin Duplicados",
+        meaning: "Devuelve únicamente valores únicos, descartando duplicados.",
+        example: "SELECT DISTINCT pais FROM clientes;",
+        tip: "Muy útil para ver listas limpias de categorías o países."
+      },
+      {
+        id: "sql-5",
+        cat: "FILTROS",
+        name: "ORDER BY",
+        badge: "Ordenar",
+        meaning: "Ordena los resultados de forma ascendente (ASC) o descendente (DESC).",
+        example: "SELECT * FROM productos ORDER BY precio DESC;",
+        tip: "Por defecto siempre ordena de menor a mayor (ASC)."
+      },
+      {
+        id: "sql-6",
+        cat: "FILTROS",
+        name: "LIMIT / TOP",
+        badge: "Límite",
+        meaning: "Limita la cantidad de registros devueltos (ideal para tests rápidos).",
+        example: "SELECT * FROM clientes LIMIT 5;",
+        tip: "En SQL Server se escribe SELECT TOP 5."
+      },
+      {
+        id: "sql-7",
+        cat: "FILTROS",
+        name: "AND / OR",
+        badge: "Operadores",
+        meaning: "Combina múltiples condiciones en el WHERE.",
+        example: "SELECT * FROM pedidos WHERE estado = 'pagado' AND total > 500;",
+        tip: "AND exige ambas; OR basta con que se cumpla al menos una."
+      },
+      {
+        id: "sql-8",
+        cat: "FILTROS",
+        name: "LIKE (% _)",
+        badge: "Buscar Texto",
+        meaning: "Busca patrones en textos usando comodines (% para varios caracteres).",
+        example: "SELECT * FROM usuarios WHERE email LIKE '%@gmail.com';",
+        tip: "'%hola%' busca la palabra en cualquier posición del texto."
+      },
+      {
+        id: "sql-9",
+        cat: "FILTROS",
+        name: "IN / BETWEEN",
+        badge: "Rangos y Listas",
+        meaning: "IN evalúa si está en una lista de opciones; BETWEEN si está en un rango.",
+        example: "SELECT * FROM ventas WHERE id_sucursal IN (1, 3, 5);",
+        tip: "WHERE precio BETWEEN 10 AND 50 incluye ambos extremos."
+      },
+      {
+        id: "sql-10",
+        cat: "AGREGACIÓN",
+        name: "COUNT() / SUM()",
+        badge: "Contar & Sumar",
+        meaning: "COUNT cuenta filas y SUM calcula el total numérico de una columna.",
+        example: "SELECT COUNT(*), SUM(monto) FROM compras;",
+        tip: "COUNT(columna) ignora automáticamente los valores NULL."
+      },
+      {
+        id: "sql-11",
+        cat: "AGREGACIÓN",
+        name: "AVG() / MIN() / MAX()",
+        badge: "Promedio & Extremos",
+        meaning: "Calcula el promedio, el valor más bajo o el más alto de un campo.",
+        example: "SELECT AVG(edad), MIN(salario), MAX(salario) FROM empleados;",
+        tip: "Siempre se aplican sobre columnas de tipo numérico."
+      },
+      {
+        id: "sql-12",
+        cat: "AGREGACIÓN",
+        name: "GROUP BY",
+        badge: "Agrupar",
+        meaning: "Agrupa registros con valores idénticos para resumirlos (como una tabla dinámica).",
+        example: "SELECT categoria, COUNT(*) FROM productos GROUP BY categoria;",
+        tip: "Toda columna del SELECT que no sea agregación debe ir en el GROUP BY."
+      },
+      {
+        id: "sql-13",
+        cat: "AGREGACIÓN",
+        name: "HAVING",
+        badge: "Filtro Agrupado",
+        meaning: "Es como el WHERE pero para filtrar grupos calculados por GROUP BY.",
+        example: "SELECT categoria, AVG(precio) FROM productos GROUP BY categoria HAVING AVG(precio) > 200;",
+        tip: "WHERE filtra filas antes de agrupar; HAVING filtra después."
+      },
+      {
+        id: "sql-14",
+        cat: "JOINS",
+        name: "INNER JOIN",
+        badge: "Cruce Exacto",
+        meaning: "Cruza dos tablas y devuelve solo las filas que tienen coincidencia en ambas.",
+        example: "SELECT u.nombre, p.total FROM usuarios u INNER JOIN pedidos p ON u.id = p.usuario_id;",
+        tip: "Equivalente al BUSCARV / XLOOKUP exacto de Excel."
+      },
+      {
+        id: "sql-15",
+        cat: "JOINS",
+        name: "LEFT JOIN",
+        badge: "Mantener Todo",
+        meaning: "Trae todas las filas de la tabla izquierda, aunque no tengan cruce en la derecha.",
+        example: "SELECT c.nombre, v.fecha FROM clientes c LEFT JOIN ventas v ON c.id = v.cliente_id;",
+        tip: "Las columnas sin coincidencia aparecerán como NULL."
+      },
+      {
+        id: "sql-16",
+        cat: "CONSULTAS",
+        name: "INSERT / UPDATE",
+        badge: "Crear & Modificar",
+        meaning: "INSERT agrega nuevas filas; UPDATE edita registros existentes.",
+        example: "UPDATE usuarios SET activo = 1 WHERE id = 42;",
+        tip: "¡PELIGRO! Nunca ejecutes un UPDATE sin la cláusula WHERE."
+      }
+    ];
+
+    // TAB SWITCHING
+    function switchMainTab(tab) {
+      activeTab = tab;
+      const excelSection = document.getElementById("excelSection");
+      const sqlSection = document.getElementById("sqlSection");
+      const excelControls = document.getElementById("excelControls");
+      const sqlControls = document.getElementById("sqlControls");
+      const tabExcelBtn = document.getElementById("tabExcelBtn");
+      const tabSqlBtn = document.getElementById("tabSqlBtn");
+      const searchInput = document.getElementById("searchInput");
+
+      if (tab === "EXCEL") {
+        excelSection.classList.remove("hidden");
+        sqlSection.classList.add("hidden");
+        excelControls.classList.remove("hidden");
+        sqlControls.classList.add("hidden");
+        tabExcelBtn.className = "px-6 py-2.5 rounded-2xl text-sm font-black tracking-wide transition flex items-center gap-2 bg-pink-500 text-white shadow-md shadow-pink-200";
+        tabSqlBtn.className = "px-6 py-2.5 rounded-2xl text-sm font-black tracking-wide transition flex items-center gap-2 bg-white text-pink-600 border-2 border-pink-200 hover:bg-pink-50";
+        searchInput.placeholder = "Buscar atajo (ej. 'copiar', 'Ctrl + C', 'moneda')...";
+      } else {
+        sqlSection.classList.remove("hidden");
+        excelSection.classList.add("hidden");
+        sqlControls.classList.remove("hidden");
+        excelControls.classList.add("hidden");
+        tabSqlBtn.className = "px-6 py-2.5 rounded-2xl text-sm font-black tracking-wide transition flex items-center gap-2 bg-pink-500 text-white shadow-md shadow-pink-200";
+        tabExcelBtn.className = "px-6 py-2.5 rounded-2xl text-sm font-black tracking-wide transition flex items-center gap-2 bg-white text-pink-600 border-2 border-pink-200 hover:bg-pink-50";
+        searchInput.placeholder = "Buscar comando o concepto (ej. 'SELECT', 'JOIN', 'WHERE')...";
+      }
+      renderActiveView();
+    }
+
+    // EXCEL LANGUAGE
+    function setLanguage(lang) {
+      currentExcelLang = lang;
+      const btnES = document.getElementById("langES");
+      const btnEN = document.getElementById("langEN");
+      if (lang === "ES") {
+        btnES.className = "px-2.5 py-1 rounded-lg text-xs font-black transition bg-pink-500 text-white shadow-sm";
+        btnEN.className = "px-2.5 py-1 rounded-lg text-xs font-black transition text-pink-600 hover:text-pink-800";
+      } else {
+        btnEN.className = "px-2.5 py-1 rounded-lg text-xs font-black transition bg-pink-500 text-white shadow-sm";
+        btnES.className = "px-2.5 py-1 rounded-lg text-xs font-black transition text-pink-600 hover:text-pink-800";
+      }
+      renderExcel();
+    }
+
+    // EXCEL CATEGORY FILTER
+    function filterExcelCategory(cat, event) {
+      currentExcelCat = cat;
+      document.querySelectorAll(".excel-cat-btn").forEach(btn => {
+        btn.classList.remove("bg-pink-500", "text-white", "shadow-sm");
+        btn.classList.add("bg-white", "text-pink-600", "border-pink-200");
+      });
+      if (event && event.target) {
+        event.target.classList.remove("bg-white", "text-pink-600");
+        event.target.classList.add("bg-pink-500", "text-white", "shadow-sm");
+      }
+      renderExcel();
+    }
+
+    // SQL CATEGORY FILTER
+    function filterSqlCategory(cat, event) {
+      currentSqlCat = cat;
+      document.querySelectorAll(".sql-cat-btn").forEach(btn => {
+        btn.classList.remove("bg-pink-500", "text-white", "shadow-sm");
+        btn.classList.add("bg-white", "text-pink-600", "border-pink-200");
+      });
+      if (event && event.target) {
+        event.target.classList.remove("bg-white", "text-pink-600");
+        event.target.classList.add("bg-pink-500", "text-white", "shadow-sm");
+      }
+      renderSql();
+    }
+
+    // RENDER EXCEL
+    function renderExcel() {
+      const container = document.getElementById("cardsGrid");
+      const noResults = document.getElementById("noResults");
+      container.innerHTML = "";
+
+      const categories = ["BÁSICOS", "INTERMEDIO", "AVANZADO", "INFRAVALORADOS"];
+      let hasAnyMatch = false;
+
+      categories.forEach(category => {
+        if (currentExcelCat !== "ALL" && currentExcelCat !== category) return;
+
+        const filtered = SHORTCUTS.filter(item => {
+          const matchesCat = item.cat === category;
+          const q = searchQuery.toLowerCase();
+          const matchesSearch = searchQuery === "" || 
+            item.action.toLowerCase().includes(q) ||
+            item.es.toLowerCase().includes(q) ||
+            item.en.toLowerCase().includes(q) ||
+            String(item.id).includes(q);
+          return matchesCat && matchesSearch;
+        });
+
+        if (filtered.length === 0) return;
+        hasAnyMatch = true;
+
+        const card = document.createElement("div");
+        card.className = "bg-white rounded-3xl kawaii-card overflow-hidden transition-transform duration-200";
+
+        card.innerHTML = `
+          <div class="bg-gradient-to-r from-pink-400 to-pink-500 px-5 py-3.5 flex items-center justify-between text-white shadow-sm">
+            <h2 class="font-extrabold text-sm sm:text-base tracking-wider uppercase flex items-center gap-2">
+              <span>💖 ${category}</span>
+            </h2>
+            <span class="bg-white/20 px-2.5 py-0.5 rounded-full text-xs font-bold">${filtered.length} atajos</span>
+          </div>
+          <div class="divide-y divide-pink-100 max-h-[520px] overflow-y-auto">
+            ${filtered.map((item, idx) => {
+              const activeKey = currentExcelLang === "ES" ? item.es : item.en;
+              const altKey = currentExcelLang === "ES" ? item.en : item.es;
+              const hasDiff = item.es !== item.en;
+
+              return `
+                <div class="flex items-center justify-between p-3 sm:px-4 text-xs sm:text-sm ${idx % 2 === 0 ? 'bg-pink-50/30' : 'bg-white'} hover:bg-pink-100/40 transition">
+                  <div class="flex items-center gap-2.5 pr-2">
+                    <span class="w-6 h-6 flex-shrink-0 rounded-full bg-pink-100 text-pink-500 font-black text-xs flex items-center justify-center border border-pink-200">
+                      ${item.id}
+                    </span>
+                    <div>
+                      <span class="text-pink-900 font-bold block">${item.action}</span>${hasDiff ? `<span class="text-[10px] text-pink-400 font-semibold">${currentExcelLang === 'ES' ? 'EN: ' + altKey : 'ES: ' + altKey}</span>` : ''}
+                    </div>
+                  </div>
+                  <div class="flex-shrink-0">
+                    <span class="kbd-chip bg-white border-2 border-pink-200 text-pink-600 px-2.5 py-1 rounded-xl text-xs font-bold whitespace-nowrap">
+                      ${activeKey}
+                    </span>
+                  </div>
+                </div>
+              `;
+            }).join("")}
+          </div>
+        `;
+        container.appendChild(card);
+      });
+
+      noResults.classList.toggle("hidden", hasAnyMatch);
+    }
+
+    // RENDER SQL
+    function renderSql() {
+      const container = document.getElementById("sqlGrid");
+      const noResults = document.getElementById("noResults");
+      container.innerHTML = "";
+
+      const filtered = SQL_COMMANDS.filter(cmd => {
+        const matchesCat = currentSqlCat === "ALL" || cmd.cat === currentSqlCat;
+        const q = searchQuery.toLowerCase();
+        const matchesSearch = searchQuery === "" ||
+          cmd.name.toLowerCase().includes(q) ||
+          cmd.meaning.toLowerCase().includes(q) ||
+          cmd.example.toLowerCase().includes(q) ||
+          cmd.badge.toLowerCase().includes(q);
+        return matchesCat && matchesSearch;
+      });
+
+      if (filtered.length === 0) {
+        noResults.classList.remove("hidden");
+        return;
+      }
+      noResults.classList.add("hidden");
+
+      filtered.forEach(cmd => {
+        const card = document.createElement("div");
+        card.className = "bg-white rounded-3xl kawaii-card p-5 flex flex-col justify-between hover:shadow-lg transition";
+
+        card.innerHTML = `
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-2">
+              <span class="sql-code text-base font-black text-pink-600 bg-pink-50 border-2 border-pink-200 px-3 py-0.5 rounded-xl">
+                ${cmd.name}
+              </span>
+              <span class="text-[11px] font-extrabold uppercase px-2.5 py-0.5 rounded-full bg-pink-100 text-pink-500">
+                ${cmd.badge}
+              </span>
+            </div>
+            <p class="text-xs font-semibold text-pink-800 mt-2.5 leading-relaxed">
+              ${cmd.meaning}
+            </p>
+          </div>
+
+          <div class="mt-4 space-y-2">
+            <div class="bg-pink-900 text-pink-100 p-2.5 rounded-2xl text-[11px] sql-code overflow-x-auto shadow-inner border border-pink-700">
+              <code>${cmd.example}</code>
+            </div>
+            <p class="text-[10px] text-pink-500 font-bold flex items-center gap-1">
+              <span>💡</span> ${cmd.tip}
+            </p>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function renderActiveView() {
+      if (activeTab === "EXCEL") {
+        renderExcel();
+      } else {
+        renderSql();
+      }
+    }
+
+    // SEARCH LISTENER
+    document.getElementById("searchInput").addEventListener("input", (e) => {
+      searchQuery = e.target.value.trim();
+      renderActiveView();
+    });
+
+    // INIT
+    renderActiveView();
+  </script>
+</body>
+</html>
