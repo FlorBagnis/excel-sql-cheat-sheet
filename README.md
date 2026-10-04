@@ -59,6 +59,16 @@ Compatible con cualquier navegador web moderno en computadoras, notebooks y disp
 
 ---
 
+
+¿Te sirvió? Dejale una ⭐ al repo.
+
+---
+
+## 📄 Licencia
+
+Distribuido bajo licencia MIT. Ver el archivo `LICENSE`.
+
+
 👩‍💻 Autora
 
 **Florencia Bagnis**
